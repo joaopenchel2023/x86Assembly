@@ -7,7 +7,7 @@ NameSystem db "KiddieOS",0
 
 ; ===== MONITOR AND WINDOW CONFIGURATION =====
 
-count		dw 0000h
+Count		dw 0000h
 
 BackWidth	dw 0000h
 BackHeight	dw 0000h
@@ -91,10 +91,29 @@ EffectInit:
 		mov bl, 0
 		mov byte[State], bl
 		mov bx, [Count]
-
+		inc bx
+		mov WORD[Count], bx
+		cmp bx, 5000
+		jne ReturnLoop
+		jmp ReturnProg
+	ReturnLoop:
+		popa
+		jmp start		
+	ReturnProg:
+		popa
+		ret
 ret
-
-Wainting:
+	
+Waiting:
+	pusha
+	mov bx, 0
+	time:
+		inc bx
+		cmp bx, 50000
+		jne time
+	popa
+ret
+	
 	
 
 	
